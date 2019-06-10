@@ -29,7 +29,10 @@ $(document).ready(() => {
         $.getJSON(alerts_url, function(dat){
             var items = '';
             var limit = dat.total < 50 ? dat.total : 50;
-            items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> alerts results.'
+            if(limit < 1){
+                items += '<p> No Alerts Results </p>';
+            }
+            //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> alerts results.'
 
             for(var i = 0; i < limit; i++){
                 //items += '<br>';
@@ -45,7 +48,7 @@ $(document).ready(() => {
                 items += '<p>'+dat.data[i].description + '</p>';
                 items += '<p> Category: '+dat.data[i].category + '</p>';
                 items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
-                items += '<br>';
+                items += '<hr>';
             }
             $('.general-content-container').empty();
             $('.general-content-container').append(items);
@@ -59,7 +62,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> alerts results.'
+                if(limit < 1){
+                    items += '<p> No Alerts Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> alerts results.'
                 for(var i = 0; i < limit; i++){
                     //items += '<br>';
                     if(dat.data[i].url !== ""){
@@ -74,7 +80,7 @@ $(document).ready(() => {
                     items += '<p>'+dat.data[i].description + '</p>';
                     items += '<p> Category: '+dat.data[i].category + '</p>';
                     items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
-                    items += '<br>';
+                    items += '<hr>';
                 }
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
@@ -88,7 +94,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> articles results.'
+                if(limit < 1){
+                    items += '<p> No Articles Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> articles results.'
                 for(var i = 0; i < limit; i++){
                     //items += '<br>';
                     if(dat.data[i].url !== ""){
@@ -103,7 +112,7 @@ $(document).ready(() => {
                     items += '<p>'+dat.data[i].listingdescription + '</p>';
                     //items += '<p> Category: '+dat.data[i].category + '</p>';
                     //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
-                    items += '<br>';
+                    items += '<hr>';
                 }
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
@@ -114,10 +123,13 @@ $(document).ready(() => {
             q = $('.search-input').val();
             //default content upon basic search is alerts
             var alerts_url = base_url + campgrounds + 'q=' + q + '&' + app_id;
-            var items = '';
             $.getJSON(alerts_url, function(dat){
+                var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> campgrounds results.'
+                if(limit < 1){
+                    items += '<p> No Campgrounds Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> campgrounds results.'
                 for(var i = 0; i < limit; i++){
                     //items += '<br>';
                     items += '<h2>' + dat.data[i].name + '</h2>';
@@ -203,7 +215,7 @@ $(document).ready(() => {
                         */
                     //items += '<p> Category: '+dat.data[i].category + '</p>';
                     //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
-                    items += '<br>';
+                    items += '<hr>';
                 }
                 function line1(url){
                     $.getJSON(url, function(data){
@@ -223,12 +235,15 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 5 ? dat.total : 5;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> events results.';
-                items += '<p> <a href=\"' + alerts_url + '\" target=\"_blank\">' +alerts_url+ '</a></p>';
+                if(limit < 1){
+                    items += '<p> No Events Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> events results.';
+                //items += '<p> <a href=\"' + alerts_url + '\" target=\"_blank\">' +alerts_url+ '</a></p>';
                 for(var i = 0; i < limit; i++){
                     items += '<h2>' + dat.data[i].title + '</h2>';   
                     items += '<p>' + dat.data[i].description + '</p>';                 
-                    items += '<br>';
+                    items += '<hr>';
                 }
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
@@ -242,7 +257,10 @@ $(document).ready(() => {
             $.getJSON(encodeURI(alerts_url), function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> lessonplans results.'
+                if(limit < 1){
+                    items += '<p> No Lessonplans Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> lessonplans results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -255,7 +273,7 @@ $(document).ready(() => {
                     }   
                     items += '<p> OBJECTIVES: ' + dat.data[i].questionobjective + '</p>';
                     items += '<p> <i> ' + dat.data[i].gradelevel + '</i> </p>';                 
-                    items += '<br>';
+                    items += '<hr>';
                 }
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
@@ -270,7 +288,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> newsreleases results.'
+                if(limit < 1){
+                    items += '<p> No Newsreleases Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> newsreleases results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -283,7 +304,7 @@ $(document).ready(() => {
                     }   
                     items += '<p> <i>' + dat.data[i].releasedate + '</i> </p>';
                     items += '<p> ' + dat.data[i].abstract + '</p>';                 
-                    items += '<br>';
+                    items += '<hr>';
                 }
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
@@ -297,7 +318,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> parks results.'
+                if(limit < 1){
+                    items += '<p> No Parks Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> parks results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -330,7 +354,7 @@ $(document).ready(() => {
                     } else {
                         items += '<p> <i> Location Coordinates:  </i>  n/a </p>';
                     } 
-                    items += '<br>';
+                    items += '<hr>';
 
                 }
                 $('.general-content-container').empty();
@@ -345,7 +369,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> people results.'
+                if(limit < 1){
+                    items += '<p> No People Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> people results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -357,7 +384,7 @@ $(document).ready(() => {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
                     }   
                     items += '<p> <i>' + dat.data[i].listingdescription + '</i> </p>';
-                    items += '<br>';
+                    items += '<hr>';
 
                 }
                 $('.general-content-container').empty();
@@ -372,7 +399,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> places results.'
+                if(limit < 1){
+                    items += '<p> No Places Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> places results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -395,7 +425,7 @@ $(document).ready(() => {
                     } else {
                         items += '<p> <i> Location Coordinates:  </i>  n/a </p>';
                     }
-                    items += '<br>';
+                    items += '<hr>';
 
                 }
                 $('.general-content-container').empty();
@@ -411,7 +441,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> visitor center results.'
+                if(limit < 1){
+                    items += '<p> No Visitor Centers Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> visitor center results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -436,7 +469,7 @@ $(document).ready(() => {
                     } else {
                         items += '<p> <i> Location Coordinates:  </i>  n/a </p>';
                     }
-                    items += '<br>';
+                    items += '<hr>';
 
                 }
                 $('.general-content-container').empty();
@@ -476,14 +509,21 @@ $(document).ready(() => {
         stateCode = $('.state-dropdown').val();
         $('.alerts-content').text(stateCode);
 
+        var alerts_total = 0;
+
         //default content upon basic search is alerts
         var alerts_url = base_url + alerts + 'q=' + q + '&parkCode=' + parkCode + '&stateCode=' + stateCode + '&' + app_id;
         $.getJSON(alerts_url, function(dat){
             var items = '';
-            items += '<p>' + alerts_url + '</p>';
+            alerts_total = dat.total;
+            //items += '<p>' + alerts_url + '</p>';
             var limit = dat.total < 50 ? dat.total : 50;
-            items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> alerts results.'
+            if(limit < 1){
+                items += '<p> No Alerts Results </p>';
+            }
+            //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> alerts results.'
 
+            //if(limit <= 50){
             for(var i = 0; i < limit; i++){
                 //items += '<br>';
                 if(dat.data[i].url !== ""){
@@ -498,22 +538,10 @@ $(document).ready(() => {
                 items += '<p>'+dat.data[i].description + '</p>';
                 items += '<p> Category: '+dat.data[i].category + '</p>';
                 items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
-                items += '<br>';
+                items += '<hr>';
             }
-            $('.general-content-container').empty();
-            $('.general-content-container').append(items);
-        });
-
-        //Alerts Content with .alerts-button
-        $('.alerts-button').on('click',() => {
-            q = $('.search-input').val();
-            //default content upon basic search is alerts
-            var alerts_url = base_url + alerts + 'q=' + q + '&parkCode=' + parkCode + '&stateCode=' + stateCode + '&' + app_id;
-            $.getJSON(alerts_url, function(dat){
-                var items = '';
-                var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> alerts results.'
-                for(var i = 0; i < limit; i++){
+            /*} else {
+                for(var i = 0; i < 50; i++){
                     //items += '<br>';
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -527,21 +555,114 @@ $(document).ready(() => {
                     items += '<p>'+dat.data[i].description + '</p>';
                     items += '<p> Category: '+dat.data[i].category + '</p>';
                     items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
-                    items += '<br>';
+                    items += '<hr>';
                 }
+                items += '<button class = \'alerts-load-all-button\'> Load More Results </button>';
+            }*/
+            $('.general-content-container').empty();
+            $('.general-content-container').append(items);
+        });
+
+        //Alerts Content with .alerts-button
+        $('.alerts-button').on('click',() => {
+            q = $('.search-input').val();
+            //default content upon basic search is alerts
+            var alerts_url = base_url + alerts + 'q=' + q + '&parkCode=' + parkCode + '&stateCode=' + stateCode + '&' + app_id;
+            $.getJSON(alerts_url, function(dat){
+                var items = '';
+                alerts_total = dat.total;
+                var limit = dat.total < 50 ? dat.total : 50;
+                if(limit < 1){
+                    items += '<p> No Alerts Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> alerts results.'
+                //if(limit < 50){
+                    for(var i = 0; i < limit; i++){
+                        //items += '<br>';
+                        if(dat.data[i].url !== ""){
+                            items += '<h3>';
+                            items += '<a href=\"' + dat.data[i].url + "\" target=\"_blank\">";
+                            items += dat.data[i].title;
+                            items += '</a>'
+                            items += '</h3>';
+                        } else {
+                            items += '<h3>' +dat.data[i].title+ '</h3>';
+                        }
+                        items += '<p>'+dat.data[i].description + '</p>';
+                        items += '<p> Category: '+dat.data[i].category + '</p>';
+                        items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
+                        items += '<hr>';
+                    }
+                /*} else {
+                    for(var i = 0; i < 50; i++){
+                        //items += '<br>';
+                        if(dat.data[i].url !== ""){
+                            items += '<h3>';
+                            items += '<a href=\"' + dat.data[i].url + "\" target=\"_blank\">";
+                            items += dat.data[i].title;
+                            items += '</a>'
+                            items += '</h3>';
+                        } else {
+                            items += '<h3>' +dat.data[i].title+ '</h3>';
+                        }
+                        items += '<p>'+dat.data[i].description + '</p>';
+                        items += '<p> Category: '+dat.data[i].category + '</p>';
+                        items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
+                        items += '<hr>';
+                    }
+                    items += '<button class = \'alerts-load-all-button\'> Load More Results </button>';
+                }*/
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
             });
         });
+
+        /*if($('.alerts-load-all-button').length){
+            $('.alerts-load-all-button').on('click', () => {
+                $('.alerts-load-all-button').hide();
+                var items = '';
+                q = $('.search-input').val();
+                //default content upon basic search is alerts
+                var limit = alerts_total;
+                var alerts_url = base_url + alerts + 'q=' + q + '&limit=' + limit + '&parkCode=' + parkCode + '&stateCode=' + stateCode + '&' + app_id;
+                
+                $.getJSON(alerts_url, function(dat){
+                    for(var i = 51; i < limit; i++){
+                        //items += '<br>';
+                        if(dat.data[i].url !== ""){
+                            items += '<h3>';
+                            items += '<a href=\"' + dat.data[i].url + "\" target=\"_blank\">";
+                            items += dat.data[i].title;
+                            items += '</a>'
+                            items += '</h3>';
+                        } else {
+                            items += '<h3>' +dat.data[i].title+ '</h3>';
+                        }
+                        items += '<p>'+dat.data[i].description + '</p>';
+                        items += '<p> Category: '+dat.data[i].category + '</p>';
+                        items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
+                        items += '<hr>';
+                    }
+                    $('.general-content-container').append(items);
+                });
+            });
+        }*/
+
+        var articles_total = 0;
         //Articles Content with .articles-button
         $('.articles-button').on('click',() => {
             q = $('.search-input').val();
             //default content upon basic search is alerts
             var alerts_url = base_url + articles + 'q=' + q + '&parkCode=' + parkCode + '&stateCode=' + stateCode + '&' + app_id;
             $.getJSON(alerts_url, function(dat){
-                var items = '';
+                articles_total = dat.total;
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> articles results.'
+                //if(limit < 50){
+                var items = '';
+                if(limit < 1){
+                    items += '<p> No Articles Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> articles results.';
                 for(var i = 0; i < limit; i++){
                     //items += '<br>';
                     if(dat.data[i].url !== ""){
@@ -556,21 +677,106 @@ $(document).ready(() => {
                     items += '<p>'+dat.data[i].listingdescription + '</p>';
                     //items += '<p> Category: '+dat.data[i].category + '</p>';
                     //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
-                    items += '<br>';
+                    items += '<hr>';
+                    }
+                //}
+                
+                /*else {
+                    for(var i = 0; i < limit; i++){
+                        //items += '<br>';
+                        if(dat.data[i].url !== ""){
+                            items += '<h3>';
+                            items += '<a href=\"' + dat.data[i].url + "\" target=\"_blank\">";
+                            items += dat.data[i].title;
+                            items += '</a>'
+                            items += '</h3>';
+                        } else {
+                            items += '<h3>' +dat.data[i].title+ '</h3>';
+                        }
+                        items += '<p>'+dat.data[i].listingdescription + '</p>';
+                        //items += '<p> Category: '+dat.data[i].category + '</p>';
+                        //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
+                        items += '<hr>';
+                    }
+                    items += '<button class = \'articles-load-all-button\'> Load More Results </button>';
                 }
+                
+                if($('.articles-load-all-button').length){
+                    $('.articles-load-all-button').on('click', () => {
+                        $('.articles-load-all-button').hide();
+                        var items = '';
+                        q = $('.search-input').val();
+                        //default content upon basic search is alerts
+                        var limit = articles_total;
+                        var alerts_url = base_url + alerts + 'q=' + q + '&limit=' + limit + '&parkCode=' + parkCode + '&stateCode=' + stateCode + '&' + app_id;
+                        
+                        $.getJSON(alerts_url, function(dat){
+                            for(var i = 50; i < limit; i++){
+                                //items += '<br>';
+                                if(dat.data[i].url !== ""){
+                                    items += '<h3>';
+                                    items += '<a href=\"' + dat.data[i].url + "\" target=\"_blank\">";
+                                    items += dat.data[i].title;
+                                    items += '</a>'
+                                    items += '</h3>';
+                                } else {
+                                    items += '<h3>' +dat.data[i].title+ '</h3>';
+                                }
+                                items += '<p>'+dat.data[i].listingdescription + '</p>';
+                                //items += '<p> Category: '+dat.data[i].category + '</p>';
+                                //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
+                                items += '<hr>';
+                            }
+                            $('.general-content-container').append(items);
+                        });
+                    });
+                }*/
+
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
             });
+
+            /*if(articles_total >= 50){
+                limit = articles_total;
+                alerts_url = base_url + alerts + 'q=' + q + '&limit=' + limit + '&parkCode=' + parkCode + '&stateCode=' + stateCode + '&' + app_id;
+                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> articles results.';
+
+                $.getJSON(alerts_url, function(dat){
+                    for(var i = 0; i < limit; i++){
+                        //items += '<br>';
+                        if(dat.data[i].url !== ""){
+                            items += '<h3>';
+                            items += '<a href=\"' + dat.data[i].url + "\" target=\"_blank\">";
+                            items += dat.data[i].title;
+                            items += '</a>'
+                            items += '</h3>';
+                        } else {
+                            items += '<h3>' +dat.data[i].title+ '</h3>';
+                        }
+                        items += '<p>'+dat.data[i].listingdescription + '</p>';
+                        //items += '<p> Category: '+dat.data[i].category + '</p>';
+                        //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
+                        items += '<hr>';
+                    }
+                });
+            } */
+
         });
+
+        
+
         //Campgrounds Content with .campgrounds-button
         $('.campgrounds-button').on('click',() => {
             q = $('.search-input').val();
             //default content upon basic search is alerts
             var alerts_url = base_url + campgrounds + 'q=' + q + '&parkCode=' + parkCode + '&stateCode=' + stateCode + '&' + app_id;
-            var items = '';
             $.getJSON(alerts_url, function(dat){
+                var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> campgrounds results.'
+                if(limit < 1){
+                    items += '<p> No Campgrounds Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> campgrounds results.'
                 for(var i = 0; i < limit; i++){
                     //items += '<br>';
                     items += '<h2>' + dat.data[i].name + '</h2>';
@@ -676,8 +882,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 5 ? dat.total : 5;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> events results.';
-                items += '<p> <a href=\"' + alerts_url + '\" target=\"_blank\">' +alerts_url+ '</a></p>';
+                if(limit < 1){
+                    items += '<p> No Events Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> events results.';
                 for(var i = 0; i < limit; i++){
                     items += '<h2>' + dat.data[i].title + '</h2>';   
                     items += '<p>' + dat.data[i].description + '</p>';                 
@@ -695,7 +903,10 @@ $(document).ready(() => {
             $.getJSON(encodeURI(alerts_url), function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> lessonplans results.'
+                if(limit < 1){
+                    items += '<p> No Lessonplans Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> lessonplans results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -723,7 +934,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> newsreleases results.'
+                if(limit < 1){
+                    items += '<p> No Newsreleases Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> newsreleases results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -750,7 +964,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> parks results.'
+                if(limit < 1){
+                    items += '<p> No Parks Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> parks results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -798,7 +1015,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> people results.'
+                if(limit < 1){
+                    items += '<p> No People Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> people results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -825,7 +1045,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> places results.'
+                if(limit < 1){
+                    items += '<p> No Places Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> places results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
@@ -864,7 +1087,10 @@ $(document).ready(() => {
             $.getJSON(alerts_url, function(dat){
                 var items = '';
                 var limit = dat.total < 50 ? dat.total : 50;
-                items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> visitor center results.'
+                if(limit < 1){
+                    items += '<p> No Visitor Center Results </p>';
+                }
+                //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> visitor center results.'
                 for(var i = 0; i < limit; i++){
                     if(dat.data[i].url !== ""){
                         items += '<h3>';
