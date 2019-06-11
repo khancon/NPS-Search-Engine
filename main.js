@@ -109,6 +109,9 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
                     }
+                    if(dat.data[i].listingimage.url !== ""){
+                        items += '<img src=\"' + dat.data[i].listingimage.url + '\" height=\"240\" width=\"360\">';
+                    }
                     items += '<p>'+dat.data[i].listingdescription + '</p>';
                     //items += '<p> Category: '+dat.data[i].category + '</p>';
                     //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
@@ -132,7 +135,13 @@ $(document).ready(() => {
                 //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> campgrounds results.'
                 for(var i = 0; i < limit; i++){
                     //items += '<br>';
-                    items += '<h2>' + dat.data[i].name + '</h2>';
+                    //Heading
+                    if(dat.data[i].directionsUrl !== ""){
+                        items += '<h2> <a href=\"' + dat.data[i].directionsUrl + '\" target=\"_blank\">' + dat.data[i].name + '</a></h2>';
+                    } else {
+                        items += '<h2>' + dat.data[i].name + '</h2>';
+                    }
+
                     items += '<p> DESCRIPTION:  '+dat.data[i].description + '</p>';
                     if(dat.data[i].directionsoverview !== ""){
                         items += '<p> DIRECTIONS OVERVIEW:  ' + dat.data[i].directionsoverview;
@@ -143,7 +152,6 @@ $(document).ready(() => {
                         items += ' For more direction information, visit the following <a href=\"' + dat.data[i].directionsUrl + '\" target=\"_blank\">link</a>. </p>';
                     } 
 
-                    //For Location, using MapQuest Reverse Geocoding API to get address from Lat and Lng coordinates
                     if(dat.data[i].latLong !== ""){
                         var str = dat.data[i].latLong;
                         var res = str.match(/[\-0-9\.]+/g);
@@ -234,15 +242,29 @@ $(document).ready(() => {
             //alerts_url = alerts_url.replace(" ", "%20");
             $.getJSON(alerts_url, function(dat){
                 var items = '';
-                var limit = dat.total < 5 ? dat.total : 5;
+                var limit = dat.total < 10 ? dat.total : 10;
                 if(limit < 1){
                     items += '<p> No Events Results </p>';
                 }
                 //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> events results.';
                 //items += '<p> <a href=\"' + alerts_url + '\" target=\"_blank\">' +alerts_url+ '</a></p>';
                 for(var i = 0; i < limit; i++){
-                    items += '<h2>' + dat.data[i].title + '</h2>';   
-                    items += '<p>' + dat.data[i].description + '</p>';                 
+                    //Title and Info Url
+                    if(dat.data[i].infourl !== ""){
+                        items += '<h2> <a href=\'' + dat.data[i].infourl + '\' target=\'blank\'>' + dat.data[i].title + '</a></h2>';
+                    } else {
+                        items += '<h2>' + dat.data[i].title + '</h2>';   
+                    }
+                    items += '<p> <i>' + dat.data[i].parkfullname + '</i></p>';
+                    items += '<p>' + dat.data[i].description + '</p>';                
+                    items += '<p> LOCATION:  ' + dat.data[i].location + ' </p>'; 
+                    items += '<p> LOCATION COORDINATES:  ' + dat.data[i].latitude + ', ' + dat.data[i].longitude + ' </p>'; 
+                    items += '<p> DATES: ';
+                    for(var j = 0; j < dat.data[i].dates.length; j++){
+                        items += dat.data[i].dates[j] + '. ';
+                    }              
+                    items += '<p> TIME: ' + dat.data[i].times[0].timestart + ' - ' + dat.data[i].times[0].timeend + '</p>';  
+                    items += '</p>';
                     items += '<hr>';
                 }
                 $('.general-content-container').empty();
@@ -270,9 +292,29 @@ $(document).ready(() => {
                         items += '</h3>';
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
-                    }   
-                    items += '<p> OBJECTIVES: ' + dat.data[i].questionobjective + '</p>';
-                    items += '<p> <i> ' + dat.data[i].gradelevel + '</i> </p>';                 
+                    }  
+                    items += '<p> <i> ' + dat.data[i].gradelevel + '</i> </p>';   
+ 
+                    items += '<p> <i> OBJECTIVES: </i>' + dat.data[i].questionobjective + '</p>';
+                    items += '<p> <i> ' + 'COMMON CORE: ' + '</i>' + '</p>';   
+                    items += '<p> <i> ' + 'State Standards: ' + '</i>' + dat.data[i].commoncore.statestandards + '</p>';   
+                    items += '<p> <i> ' + 'Math Standards: ' + '</i>';
+                    for(var j = 0; j < dat.data[i].commoncore.mathstandards.length; j++){
+                        items += dat.data[i].commoncore.mathstandards[j] + '. ';   
+                    }
+                    items += '</p>';
+                    items += '<p> <i> ' + 'Additional Standards: ' + '</i>' + dat.data[i].commoncore.additionalstandards + '</p>';   
+                    items += '<p> <i> ' + 'ELA Standards: ' + '</i>';
+                    for(var j = 0; j < dat.data[i].commoncore.elastandards.length; j++){
+                        items += dat.data[i].commoncore.elastandards[j] + '. ';   
+                    }
+                    items += '</p>';
+
+                    items += '<p> <i> ' + 'PARKS: ' + '</i>';
+                    for(var j = 0; j < dat.data[i].parks.length; j++){
+                        items += dat.data[i].parks[j] + '. ';   
+                    }
+                    items += '</p>';
                     items += '<hr>';
                 }
                 $('.general-content-container').empty();
@@ -302,6 +344,9 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
                     }   
+                    if(dat.data[i].image.url !== ""){
+                        items += '<img src=\"' + dat.data[i].image.url + '\" height=\"240\" width=\"360\">';
+                    }
                     items += '<p> <i>' + dat.data[i].releasedate + '</i> </p>';
                     items += '<p> ' + dat.data[i].abstract + '</p>';                 
                     items += '<hr>';
@@ -332,6 +377,7 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].fullName+ '</h3>';
                     }   
+                    items += '<p> <i>' + dat.data[i].designation + '</i> </p>';
                     items += '<p> <i>' + dat.data[i].states + '</i> </p>';
                     items += '<p> ' + dat.data[i].description + '</p>';   
                     items += '<p> <i> Weather Info: </i> ' + dat.data[i].weatherInfo + '</p>';                 
@@ -383,7 +429,10 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
                     }   
-                    items += '<p> <i>' + dat.data[i].listingdescription + '</i> </p>';
+                    if(dat.data[i].listingimage.url !== ""){
+                        items += '<img src=\"' + dat.data[i].listingimage.url + '\" height=\"180\" width=\"270\">';
+                    }
+                    items += '<p>' + dat.data[i].listingdescription + '</p>';
                     items += '<hr>';
 
                 }
@@ -413,7 +462,10 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
                     }   
-                    items += '<p> <i>' + dat.data[i].listingdescription + '</i> </p>';
+                    if(dat.data[i].listingimage.url !== ""){
+                        items += '<img src=\"' + dat.data[i].listingimage.url + '\" height=\"240\" width=\"360\">';
+                    }
+                    items += '<p>' + dat.data[i].listingdescription + '</p>';
                     if(dat.data[i].latLong !== ""){
                         var str = dat.data[i].latLong;
                         var res = str.match(/[\-0-9\.]+/g);
@@ -455,7 +507,7 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].name+ '</h3>';
                     }   
-                    items += '<p> <i>' + dat.data[i].description + '</i> </p>';
+                    items += '<p>' + dat.data[i].description + '</p>';
                     items += '<p> <i> Directions: </i>' + dat.data[i].directionsInfo + '</p>';
 
                     if(dat.data[i].latLong !== ""){
@@ -674,6 +726,9 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
                     }
+                    if(dat.data[i].listingimage.url !== ""){
+                        items += '<img src=\"' + dat.data[i].listingimage.url + '\" height=\"240\" width=\"360\">';
+                    }
                     items += '<p>'+dat.data[i].listingdescription + '</p>';
                     //items += '<p> Category: '+dat.data[i].category + '</p>';
                     //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
@@ -779,7 +834,13 @@ $(document).ready(() => {
                 //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> campgrounds results.'
                 for(var i = 0; i < limit; i++){
                     //items += '<br>';
-                    items += '<h2>' + dat.data[i].name + '</h2>';
+                    //Heading
+                    if(dat.data[i].directionsUrl !== ""){
+                        items += '<h2> <a href=\"' + dat.data[i].directionsUrl + '\" target=\"_blank\">' + dat.data[i].name + '</a></h2>';
+                    } else {
+                        items += '<h2>' + dat.data[i].name + '</h2>';
+                    }
+
                     items += '<p> DESCRIPTION:  '+dat.data[i].description + '</p>';
                     if(dat.data[i].directionsoverview !== ""){
                         items += '<p> DIRECTIONS OVERVIEW:  ' + dat.data[i].directionsoverview;
@@ -790,7 +851,6 @@ $(document).ready(() => {
                         items += ' For more direction information, visit the following <a href=\"' + dat.data[i].directionsUrl + '\" target=\"_blank\">link</a>. </p>';
                     } 
 
-                    //For Location, using MapQuest Reverse Geocoding API to get address from Lat and Lng coordinates
                     if(dat.data[i].latLong !== ""){
                         var str = dat.data[i].latLong;
                         var res = str.match(/[\-0-9\.]+/g);
@@ -862,7 +922,7 @@ $(document).ready(() => {
                         */
                     //items += '<p> Category: '+dat.data[i].category + '</p>';
                     //items += '<p> Park Code: '+dat.data[i].parkCode + '</p>';
-                    items += '<br>';
+                    items += '<hr>';
                 }
                 function line1(url){
                     $.getJSON(url, function(data){
@@ -881,15 +941,30 @@ $(document).ready(() => {
             //alerts_url = alerts_url.replace(" ", "%20");
             $.getJSON(alerts_url, function(dat){
                 var items = '';
-                var limit = dat.total < 5 ? dat.total : 5;
+                var limit = dat.total < 10 ? dat.total : 10;
                 if(limit < 1){
                     items += '<p> No Events Results </p>';
                 }
                 //items += '<p> Showing <b>' + limit + '</b> of <b>' + dat.total + '</b> events results.';
+                //items += '<p> <a href=\"' + alerts_url + '\" target=\"_blank\">' +alerts_url+ '</a></p>';
                 for(var i = 0; i < limit; i++){
-                    items += '<h2>' + dat.data[i].title + '</h2>';   
-                    items += '<p>' + dat.data[i].description + '</p>';                 
-                    items += '<br>';
+                    //Title and Info Url
+                    if(dat.data[i].infourl !== ""){
+                        items += '<h2> <a href=\'' + dat.data[i].infourl + '\' target=\'blank\'>' + dat.data[i].title + '</a></h2>';
+                    } else {
+                        items += '<h2>' + dat.data[i].title + '</h2>';   
+                    }
+                    items += '<p> <i>' + dat.data[i].parkfullname + '</i></p>';
+                    items += '<p>' + dat.data[i].description + '</p>';               
+                    items += '<p> LOCATION:  ' + dat.data[i].location + ' </p>'; 
+                    items += '<p> LOCATION COORDINATES:  ' + dat.data[i].latitude + ', ' + dat.data[i].longitude + ' </p>'; 
+                    items += '<p> DATES: ';
+                    for(var j = 0; j < dat.data[i].dates.length; j++){
+                        items += dat.data[i].dates[j] + '. ';
+                    }              
+                    items += '<p> TIME: ' + dat.data[i].times[0].timestart + ' - ' + dat.data[i].times[0].timeend + '</p>';  
+                    items += '</p>';
+                    items += '<hr>';
                 }
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
@@ -916,10 +991,30 @@ $(document).ready(() => {
                         items += '</h3>';
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
-                    }   
-                    items += '<p> OBJECTIVES: ' + dat.data[i].questionobjective + '</p>';
-                    items += '<p> <i> ' + dat.data[i].gradelevel + '</i> </p>';                 
-                    items += '<br>';
+                    }  
+                    items += '<p> <i> ' + dat.data[i].gradelevel + '</i> </p>';   
+ 
+                    items += '<p> <i> OBJECTIVES: </i>' + dat.data[i].questionobjective + '</p>';
+                    items += '<p> <i> ' + 'COMMON CORE: ' + '</i>' + '</p>';   
+                    items += '<p> <i> ' + 'State Standards: ' + '</i>' + dat.data[i].commoncore.statestandards + '</p>';   
+                    items += '<p> <i> ' + 'Math Standards: ' + '</i>';
+                    for(var j = 0; j < dat.data[i].commoncore.mathstandards.length; j++){
+                        items += dat.data[i].commoncore.mathstandards[j] + '. ';   
+                    }
+                    items += '</p>';
+                    items += '<p> <i> ' + 'Additional Standards: ' + '</i>' + dat.data[i].commoncore.additionalstandards + '</p>';   
+                    items += '<p> <i> ' + 'ELA Standards: ' + '</i>';
+                    for(var j = 0; j < dat.data[i].commoncore.elastandards.length; j++){
+                        items += dat.data[i].commoncore.elastandards[j] + '. ';   
+                    }
+                    items += '</p>';
+
+                    items += '<p> <i> ' + 'PARKS: ' + '</i>';
+                    for(var j = 0; j < dat.data[i].parks.length; j++){
+                        items += dat.data[i].parks[j] + '. ';   
+                    }
+                    items += '</p>';
+                    items += '<hr>';
                 }
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
@@ -947,10 +1042,13 @@ $(document).ready(() => {
                         items += '</h3>';
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
+                    }
+                    if(dat.data[i].image.url !== ""){
+                        items += '<img src=\"' + dat.data[i].image.url + '\" height=\"240\" width=\"360\">';
                     }   
                     items += '<p> <i>' + dat.data[i].releasedate + '</i> </p>';
                     items += '<p> ' + dat.data[i].abstract + '</p>';                 
-                    items += '<br>';
+                    items += '<hr>';
                 }
                 $('.general-content-container').empty();
                 $('.general-content-container').append(items);
@@ -978,6 +1076,7 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].fullName+ '</h3>';
                     }   
+                    items += '<p> <i>' + dat.data[i].designation + '</i> </p>';
                     items += '<p> <i>' + dat.data[i].states + '</i> </p>';
                     items += '<p> ' + dat.data[i].description + '</p>';   
                     items += '<p> <i> Weather Info: </i> ' + dat.data[i].weatherInfo + '</p>';                 
@@ -1000,7 +1099,7 @@ $(document).ready(() => {
                     } else {
                         items += '<p> <i> Location Coordinates:  </i>  n/a </p>';
                     } 
-                    items += '<br>';
+                    items += '<hr>';
 
                 }
                 $('.general-content-container').empty();
@@ -1028,8 +1127,11 @@ $(document).ready(() => {
                         items += '</h3>';
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
+                    }
+                    if(dat.data[i].listingimage.url !== ""){
+                        items += '<img src=\"' + dat.data[i].listingimage.url + '\" height=\"180\" width=\"270\">';
                     }   
-                    items += '<p> <i>' + dat.data[i].listingdescription + '</i> </p>';
+                    items += '<p>' + dat.data[i].listingdescription + '</p>';
                     items += '<br>';
 
                 }
@@ -1059,7 +1161,10 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].title+ '</h3>';
                     }   
-                    items += '<p> <i>' + dat.data[i].listingdescription + '</i> </p>';
+                    if(dat.data[i].listingimage.url !== ""){
+                        items += '<img src=\"' + dat.data[i].listingimage.url + '\" height=\"240\" width=\"360\">';
+                    }
+                    items += '<p>' + dat.data[i].listingdescription + '</p>';
                     if(dat.data[i].latLong !== ""){
                         var str = dat.data[i].latLong;
                         var res = str.match(/[\-0-9\.]+/g);
@@ -1071,7 +1176,7 @@ $(document).ready(() => {
                     } else {
                         items += '<p> <i> Location Coordinates:  </i>  n/a </p>';
                     }
-                    items += '<br>';
+                    items += '<hr>';
 
                 }
                 $('.general-content-container').empty();
@@ -1101,12 +1206,12 @@ $(document).ready(() => {
                     } else {
                         items += '<h3>' +dat.data[i].name+ '</h3>';
                     }   
-                    items += '<p> <i>' + dat.data[i].description + '</i> </p>';
+                    items += '<p>' + dat.data[i].description + '</p>';
                     if(dat.data[i].directionsInfo !== ""){
                         items += '<p> <i> Directions: </i>' + dat.data[i].directionsInfo + '</p>';
 
                     } else {
-                        items += '<p> <i> Directions: </i> n/a </p>';
+                        items += '<p> <i> Directions: </i>  n/a </p>';
                     }
 
                     if(dat.data[i].latLong !== ""){
